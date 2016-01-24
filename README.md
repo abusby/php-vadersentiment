@@ -22,7 +22,7 @@ print_r($result);
 ['neg'=> 0.0, 'neu'=> 0.254, 'pos'=> 0.746, 'compound'=> 0.8316]
 ```
 
-Copyright and license
+##Copyright and license
 
 The original source code is copyright © 2013 C.J. Hutto
 
