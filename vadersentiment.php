@@ -194,8 +194,7 @@ class SentimentIntensityAnalyzer{
 	*/	
     function getSentiment($text){
         $this->current_sentitext = new SentiText($text);
-       
-		echo "Getting sentiment for $text\n";
+  
         $sentiments = [];
         $words_and_emoticons = $this->current_sentitext->words_and_emoticons;
 		
@@ -203,25 +202,25 @@ class SentimentIntensityAnalyzer{
 			
             $valence = 0.0;
             $wordBeingTested = $words_and_emoticons[$i];
-			echo "\tTesting word $wordBeingTested\n";
+			
 			//If this is a booster word add a 0 valances then go to next word as it does not express sentiment directly
-            if ($this->IsBoosterWord($wordBeingTested)){
+           /* if ($this->IsBoosterWord($wordBeingTested)){
 				echo "\t\tThe word is a booster word: setting sentiment to 0.0\n";
-			}
+			}*/
 			
 			//If the word is not in the Lexicon then it does not express sentiment. So just ignore it.
 			if($this->IsInLexicon($wordBeingTested)){
 				//Special case because kind is in the lexicon so the modifier kind of needs to be skipped
 				if("kind" ==$words_and_emoticons[$i] && "of" == $words_and_emoticons[$i+1]){
-					echo "skipping kind because it is a kind of";
+					
 				}else{
 					$valence = $this->getValenceFromLexicon($wordBeingTested);
-					echo "\t\tThe word is in the lexicon: setting sentiment to $valence\n";
+
 					$wordInContext = $this->getWordInContext($words_and_emoticons,$i);
 					//If we are here then we have a word that enhance booster words
 					$valence = $this->adjustBoosterSentiment($wordInContext,$valence);
 				}
-				echo "\t\tValence after adjustment is $valence \n";
+
 				
 			}
 			array_push($sentiments,$valence);
@@ -401,7 +400,6 @@ class SentimentIntensityAnalyzer{
 
 			// check for booster/dampener bi-grams such as 'sort of' or 'kind of'
 			if($this->IsBoosterWord($threetwo) || $this->IsBoosterWord($twoone)){
-			echo "found kinda";
 				$valence = $valence+B_DECR;
 			}
 		}
