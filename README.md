@@ -15,9 +15,13 @@ require_once "vadersentiment.php";
 $textToTest = "VADER is smart, handsome, and funny.";
 
 $sentimenter = new new SentimentIntensityAnalyzer();
-$result = $sentimenter->getSentiment($$textToTest);
+$result = $sentimenter->getSentiment($textToTest);
 
 print_r($result);
+```
+##Output of example code
+```
+['neg'=> 0.0, 'neu'=> 0.254, 'pos'=> 0.746, 'compound'=> 0.8316]
 ```
 
 ##This README file describes the dataset of the paper:
