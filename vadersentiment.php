@@ -1,6 +1,6 @@
 <?php
 
-require_once "SentiText.php";
+require_once "sentitext.php";
 
 //Constants
 

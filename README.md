@@ -2,9 +2,7 @@
 
 VADER (Valence Aware Dictionary and sEntiment Reasoner) is a lexicon and rule-based sentiment analysis tool that is specifically attuned to sentiments expressed in social media. It is fully open-sourced under the MIT License (we sincerely appreciate all attributions and readily accept most contributions, but please don't hold us liable).
 
-##Introduction
 
-This is a php port of the vader sentiment analysis tool orginally written in python and found https://github.com/cjhutto/vaderSentiment
 
 
 ##Example code
@@ -23,6 +21,16 @@ print_r($result);
 ```
 ['neg'=> 0.0, 'neu'=> 0.254, 'pos'=> 0.746, 'compound'=> 0.8316]
 ```
+
+Copyright and license
+
+The original source code is copyright © 2013 C.J. Hutto
+
+Where applicable, the ported source code is copyright © 2016 Andrew Busby. All rights reserved. The ported code is made available under the MIT license. A copy of the license can be found in the LICENSE.txt file.
+
+##Acknowledgments
+
+This is a php port of the vader sentiment analysis tool orginally written in python and found https://github.com/cjhutto/vaderSentiment
 
 ##This README file describes the dataset of the paper:
 
