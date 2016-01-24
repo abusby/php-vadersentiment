@@ -78,7 +78,8 @@ class SentiText {
 		
         # get rid of residual empty items or single letter words
 		$wes = array_filter($wes,function($word){ return strlen($word) > 1; });
-
+		//Need to remap the indexes of the array
+		$wes = array_values ($wes);
 		$words_only = $this->_words_only();
 		
 		foreach($words_only as $word){
