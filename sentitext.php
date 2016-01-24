@@ -92,7 +92,7 @@ class SentiText {
                 $x1 = $this->array_count_values_of($wes,$pword);
                 while ($x1 > 0){
                     $i = array_search($pword,$wes);
-                    unset($wes[i]);
+                    unset($wes[$i]);
 					array_splice($wes,$i,0,$word);
                     $x1 = $this->array_count_values_of($wes,$pword);
 				}
