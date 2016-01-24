@@ -197,8 +197,8 @@ class SentimentIntensityAnalyzer{
   
         $sentiments = [];
         $words_and_emoticons = $this->current_sentitext->words_and_emoticons;
-		
-		for($i=0;$i<count($words_and_emoticons);$i++){
+
+		for($i=0;$i<count($words_and_emoticons)-1;$i++){
 			
             $valence = 0.0;
             $wordBeingTested = $words_and_emoticons[$i];
@@ -211,9 +211,7 @@ class SentimentIntensityAnalyzer{
 			//If the word is not in the Lexicon then it does not express sentiment. So just ignore it.
 			if($this->IsInLexicon($wordBeingTested)){
 				//Special case because kind is in the lexicon so the modifier kind of needs to be skipped
-				if("kind" ==$words_and_emoticons[$i] && "of" == $words_and_emoticons[$i+1]){
-					
-				}else{
+				if("kind" !=$words_and_emoticons[$i] && "of" != $words_and_emoticons[$i+1]){
 					$valence = $this->getValenceFromLexicon($wordBeingTested);
 
 					$wordInContext = $this->getWordInContext($words_and_emoticons,$i);
