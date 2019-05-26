@@ -1,0 +1,25 @@
+<head>
+    <title>
+        Vader Example
+    </title>
+</head>
+<body>
+    <?php
+    error_reporting(E_ALL);
+    require_once "vadersentiment.php";
+    
+    $textToTest = "VADER is smart, handsome, and funny.";
+    $textToTest2 = "I love capstone design.";
+    $textToTest3 = "I am sad.";
+    
+    $sentimenter = new SentimentIntensityAnalyzer();
+    $result = $sentimenter->getSentiment($textToTest);
+    $result2 = $sentimenter->getSentiment($textToTest2);
+    $result3 = $sentimenter->getSentiment($textToTest3);
+    
+    print_r($result);
+    print_r($result2);
+    print_r($result3);
+    echo("Hello");
+    ?>
+</body>
