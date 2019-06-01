@@ -199,10 +199,11 @@ class SentimentIntensityAnalyzer{
         $sentiments = array();
         $words_and_emoticons = $this->current_sentitext->words_and_emoticons;
 
-		for($i=0;$i<count($words_and_emoticons)-1;$i++){
+		for($i=0;$i<=count($words_and_emoticons)-1;$i++){
 			
             $valence = 0.0;
-            $wordBeingTested = $words_and_emoticons[$i];
+			$wordBeingTested = $words_and_emoticons[$i];
+			echo($wordBeingTested);
 			
 			//If this is a booster word add a 0 valances then go to next word as it does not express sentiment directly
            /* if ($this->IsBoosterWord($wordBeingTested)){
