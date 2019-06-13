@@ -21,19 +21,19 @@ define("N_SCALAR", -0.74);
 
 			 
 			 
-const NEGATE = ["aint", "arent", "cannot", "cant", "couldnt", "darent", "didnt", "doesnt",
+$NEGATE = array("aint", "arent", "cannot", "cant", "couldnt", "darent", "didnt", "doesnt",
 	"ain't", "aren't", "can't", "couldn't", "daren't", "didn't", "doesn't",
 	"dont", "hadnt", "hasnt", "havent", "isnt", "mightnt", "mustnt", "neither",
 	"don't", "hadn't", "hasn't", "haven't", "isn't", "mightn't", "mustn't",
 	"neednt", "needn't", "never", "none", "nope", "nor", "not", "nothing", "nowhere",
 	"oughtnt", "shant", "shouldnt", "uhuh", "wasnt", "werent",
 	"oughtn't", "shan't", "shouldn't", "uh-uh", "wasn't", "weren't",
-	"without", "wont", "wouldnt", "won't", "wouldn't", "rarely", "seldom", "despite"];
+	"without", "wont", "wouldnt", "won't", "wouldn't", "rarely", "seldom", "despite");
 
 //booster/dampener 'intensifiers' or 'degree adverbs'
 //http://en.wiktionary.org/wiki/Category:English_degree_adverbs
 
-const BOOSTER_DICT = ["absolutely"=> B_INCR, "amazingly"=> B_INCR, "awfully"=> B_INCR, "completely"=> B_INCR, "considerably"=> B_INCR,
+$BOOSTER_DICT = array("absolutely"=> B_INCR, "amazingly"=> B_INCR, "awfully"=> B_INCR, "completely"=> B_INCR, "considerably"=> B_INCR,
  "decidedly"=> B_INCR, "deeply"=> B_INCR, "effing"=> B_INCR, "enormously"=> B_INCR,
  "entirely"=> B_INCR, "especially"=> B_INCR, "exceptionally"=> B_INCR, "extremely"=> B_INCR,
  "fabulously"=> B_INCR, "flipping"=> B_INCR, "flippin"=> B_INCR,
@@ -49,11 +49,11 @@ const BOOSTER_DICT = ["absolutely"=> B_INCR, "amazingly"=> B_INCR, "awfully"=> B
  "kind of"=> B_DECR, "kinda"=> B_DECR, "kindof"=> B_DECR, "kind-of"=> B_DECR,
  "less"=> B_DECR, "little"=> B_DECR, "marginally"=> B_DECR, "occasionally"=> B_DECR, "partly"=> B_DECR,
  "scarcely"=> B_DECR, "slightly"=> B_DECR, "somewhat"=> B_DECR,
- "sort of"=> B_DECR, "sorta"=> B_DECR, "sortof"=> B_DECR, "sort-of"=> B_DECR];
+ "sort of"=> B_DECR, "sorta"=> B_DECR, "sortof"=> B_DECR, "sort-of"=> B_DECR);
 
 // check for special case idioms using a sentiment-laden keyword known to SAGE
-const SPECIAL_CASE_IDIOMS = ["the shit"=> 3, "the bomb"=> 3, "bad ass"=> 1.5, "yeah right"=> -2,
-                       "cut the mustard"=> 2, "kiss of death"=> -1.5, "hand to mouth"=> -2];
+$SPECIAL_CASE_IDIOMS = array("the shit"=> 3, "the bomb"=> 3, "bad ass"=> 1.5, "yeah right"=> -2,
+                       "cut the mustard"=> 2, "kiss of death"=> -1.5, "hand to mouth"=> -2);
 ##Static methods##
 
 /*
@@ -86,7 +86,7 @@ class SentimentIntensityAnalyzer{
 	
     function __construct($lexicon_file="vader_sentiment_lexicon.txt"){
 		//Not sure about this as it forces lexicon file to be in the same directory as executing script
-        $this->lexicon_file = realpath(dirname(__FILE__)) . "\\" . $lexicon_file;
+        $this->lexicon_file = realpath(dirname(__FILE__)) . "/" . $lexicon_file;
         $this->lexicon = $this->make_lex_dict();
 	}
 	
@@ -95,8 +95,8 @@ class SentimentIntensityAnalyzer{
 		Determine if input contains negation words
 	*/
 	function IsNegated($wordToTest, $include_nt=true){
-		
-		if(in_array($wordToTest,NEGATE)){
+		global $NEGATE;
+		if(in_array($wordToTest,$NEGATE)){
 			return true;
 		}
 
@@ -114,7 +114,7 @@ class SentimentIntensityAnalyzer{
 		Convert lexicon file to a dictionary
 	*/
     function make_lex_dict(){
-        $lex_dict = [];
+        $lex_dict = array();
         $fp = fopen($this->lexicon_file,"r");
 		if(!$fp){
 			die("Cannot load lexicon file");
@@ -136,11 +136,12 @@ class SentimentIntensityAnalyzer{
 	}
 	
 	private function IsBoosterWord($word){
-		return array_key_exists(strtolower($word),BOOSTER_DICT);
+		global $BOOSTER_DICT;
+		return array_key_exists(strtolower($word),$BOOSTER_DICT);
 	}
 	
 	private function getBoosterScaler($word){
-		return BOOSTER_DICT[strtolower($word)];
+		return $BOOSTER_DICT[strtolower($word)];
 	}
 	
 	private function IsInLexicon($word){
@@ -163,7 +164,7 @@ class SentimentIntensityAnalyzer{
 		Gets the precedding two words to check for emphasis
 	*/
 	private function getWordInContext($wordList,$currentWordPosition){
-		$precedingWordList =[];
+		$precedingWordList = array();
 		
 		//push the actual word on to the context list
 		array_unshift($precedingWordList,$wordList[$currentWordPosition]);
@@ -195,13 +196,14 @@ class SentimentIntensityAnalyzer{
     function getSentiment($text){
         $this->current_sentitext = new SentiText($text);
   
-        $sentiments = [];
+        $sentiments = array();
         $words_and_emoticons = $this->current_sentitext->words_and_emoticons;
 
-		for($i=0;$i<count($words_and_emoticons)-1;$i++){
+		for($i=0;$i<=count($words_and_emoticons)-1;$i++){
 			
             $valence = 0.0;
-            $wordBeingTested = $words_and_emoticons[$i];
+			$wordBeingTested = $words_and_emoticons[$i];
+			echo($wordBeingTested);
 			
 			//If this is a booster word add a 0 valances then go to next word as it does not express sentiment directly
            /* if ($this->IsBoosterWord($wordBeingTested)){
@@ -371,11 +373,12 @@ class SentimentIntensityAnalyzer{
 		
 		$zeroonetwo = sprintf("%s %s %s",$wordInContext[3], $wordInContext[2], $wordInContext[1]);
 		
-        $sequences = [$onezero, $twoonezero, $twoone, $threetwoone, $threetwo];
+        $sequences = array($onezero, $twoonezero, $twoone, $threetwoone, $threetwo);
 
         foreach($sequences as $seq){
-            if (array_key_exists(strtolower($seq), SPECIAL_CASE_IDIOMS)){
-                $valence = SPECIAL_CASE_IDIOMS[$seq];
+			global $SPECIAL_CASE_IDIOMS;
+            if (array_key_exists(strtolower($seq), $SPECIAL_CASE_IDIOMS)){
+                $valence = $SPECIAL_CASE_IDIOMS[$seq];
                 break;
 			}
 			
@@ -479,7 +482,7 @@ class SentimentIntensityAnalyzer{
                 $neu_count += 1;
 			}
 		}
-        return [$pos_sum, $neg_sum, $neu_count];
+        return array($pos_sum, $neg_sum, $neu_count);
 	}
     
 	function score_valence($sentiments, $text){
@@ -518,10 +521,10 @@ class SentimentIntensityAnalyzer{
 		}
 
         $sentiment_dict = 
-            ["neg" => round($neg, 3),
+            array("neg" => round($neg, 3),
              "neu" => round($neu, 3),
              "pos" => round($pos, 3),
-             "compound" => round($compound, 4)];
+             "compound" => round($compound, 4));
 
         return $sentiment_dict;
 	}

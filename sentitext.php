@@ -1,9 +1,10 @@
 <?php
 /*
-		Identify sentiment-relevant string-level properties of input text.
+Identify sentiment-relevant string-level properties of input text.
 */
-const PUNC_LIST = [".", "!", "?", ",", ";", ":", "-", "'", "\"",
-             "!!", "!!!", "??", "???", "?!?", "!?!", "?!?!", "!?!?"];
+function anonymous($word){ return strlen($word) > 1; }
+$PUNC_LIST = array(".", "!", "?", ",", ";", ":", "-", "'", "\"",
+"!!", "!!!", "??", "???", "?!?", "!?!", "?!?!", "!?!?");
 class SentiText {
 	
 	private $text = "";
@@ -62,13 +63,14 @@ class SentiText {
 		}
 		return $is_different;
 	}
+
 	
     function _words_only(){
 		$text_mod = $this->strip_punctuation($this->text);
         // removes punctuation (but loses emoticons & contractions)
         $words_only = preg_split('/\s+/',$text_mod);
         # get rid of empty items or single letter "words" like 'a' and 'I'
-		$works_only = array_filter($words_only,function($word){ return strlen($word) > 1; });
+		$works_only = array_filter($words_only,"anonymous");
         return $words_only;
 	}
 
@@ -77,14 +79,14 @@ class SentiText {
         $wes = preg_split('/\s+/',$this->text);
 		
         # get rid of residual empty items or single letter words
-		$wes = array_filter($wes,function($word){ return strlen($word) > 1; });
+		$wes = array_filter($wes,"anonymous");
 		//Need to remap the indexes of the array
 		$wes = array_values ($wes);
 		$words_only = $this->_words_only();
 		
 		foreach($words_only as $word){
-			
-			foreach(PUNC_LIST as $punct){
+			global $PUNC_LIST;
+			foreach($PUNC_LIST as $punct){
 				
 				//replace all punct + word combinations with word
                 $pword = $punct .$word;
