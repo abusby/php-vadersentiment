@@ -12,7 +12,7 @@ require_once "vadersentiment.php";
 
 $textToTest = "VADER is smart, handsome, and funny.";
 
-$sentimenter = new new SentimentIntensityAnalyzer();
+$sentimenter = new SentimentIntensityAnalyzer();
 $result = $sentimenter->getSentiment($textToTest);
 
 print_r($result);
@@ -24,9 +24,9 @@ print_r($result);
 
 ##Copyright and license
 
-The original source code is copyright © 2013 C.J. Hutto
+The original source code is copyright Â© 2013 C.J. Hutto
 
-Where applicable, the ported source code is copyright © 2016 Andrew Busby. All rights reserved. The ported code is made available under the MIT license. A copy of the license can be found in the LICENSE.txt file.
+Where applicable, the ported source code is copyright Â© 2016 Andrew Busby. All rights reserved. The ported code is made available under the MIT license. A copy of the license can be found in the LICENSE.txt file.
 
 ##Acknowledgments
 
