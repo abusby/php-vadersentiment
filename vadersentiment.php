@@ -338,9 +338,9 @@ class SentimentIntensityAnalyzer{
 	
     function _but_check($words_and_emoticons, $sentiments){
         # check for modification in sentiment due to contrastive conjunction 'but'
-		$bi = array_search("but",$words_and_emoticons);
+		$bi = array_search("but",$words_and_emoticons,true);
 		if(!$bi){
-			$bi = array_search("BUT",$words_and_emoticons);
+			$bi = array_search("BUT",$words_and_emoticons,true);
 		}
         if($bi){
 			for($si=0;$si<count($sentiments);$si++){
